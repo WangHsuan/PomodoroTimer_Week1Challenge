@@ -4,7 +4,7 @@ const StopWatch = document.querySelector('.StopWatch');
 
 
 
-var min = 24;
+var min = 00;
 var second = 59;
 var millisecond = 100;
 var secposition = '';
@@ -14,35 +14,31 @@ function StartStopWatch(){
   var interval;
   
   this.start = ()=> {  
-     
-      
+         
    interval =  setInterval(()=>{
-       
         millisecond --;
-        if(millisecond == 0){
+        
+        if(millisecond <= 0){
             second--;
-            millisecond =100;
+            millisecond = 100;
         }
-        if(second>=0){
-
-            if(second<10){
-              secposition='0';
-             }
-
-            StopWatch.innerHTML=`${min}:${secposition}${second}.${millisecond}`;
-
-            if(second==00){
-                min--;
-                second = 60;
-                console.log(min);}
-           
-            }
-        else{
-            clearInterval();
+        if(second <= 0){  
+            min--;
+            second = 59 ;
         }
 
-        
-        
+        if( second == 59 && millisecond == 100 && min == -1 ){
+            stop();
+            min = 5;
+            second = 0;
+            millisecond = 0;                   
+        }
+
+        //second position
+        if(second<10){
+            secposition = '0';
+        }    
+        StopWatch.innerHTML=`${min}:${secposition}${second}.${millisecond}`;
     },10);
     this.isOn = true;
 
@@ -75,8 +71,34 @@ Start.addEventListener('click',function(){
     stopwatch.isOn?stop():start();
 },false);
 
+//----todo list---------------------
+
+const todo = document.querySelector('.hsuan');
+const createTodo = document.querySelector('.CreateToDoList');
 
 
+let Todolist = ['THE FIRST THING TO DO TODAY', 'THE SECOND THING TO DO TODAY','THE THIRD THING TO DO TODAY', 'THE FOURTH THING TO DO TODAY' ];
+
+function ShowTodoList(){
+    let str = '';
+    Todolist.map((item)=>
+      str+=`<li class='listItem'>${item}</li>`
+    );
+   todo.innerHTML = `${str}`;
+}
+
+
+function AddNewMission(e){
+    e.preventDefault();
+    let InputValue = document.getElementById('NewMission');
+    Todolist.push(InputValue.value);
+    console.log(InputValue.value);
+    ShowTodoList();
+}
+
+
+// todo.addEventListener('click',ShowTodoList,false);
+createTodo.addEventListener('click',AddNewMission,false);
 
 
 //----------------------------
