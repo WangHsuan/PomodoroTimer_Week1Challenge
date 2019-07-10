@@ -4,8 +4,8 @@ const StopWatch = document.querySelector('.StopWatch');
 
 
 
-var min = 00;
-var second = 59;
+var min = 25;
+var second = 00;
 var millisecond = 100;
 var secposition = '';
 
@@ -56,12 +56,12 @@ function StartStopWatch(){
 var stopwatch = new StartStopWatch();
 
 function start(){
-    Start.textContent = 'Stop';
+    Start.innerHTML = `<span style="color:#ffedf7;"><i class="far fa-stop-circle fa-5x"></i></span>`;
     stopwatch.start();
 }
 
 function stop(){
-    Start.textContent = 'Start';
+    Start.innerHTML = `<span style="color:#ffedf7;"><i class="far fa-play-circle fa-5x"></i></span>`;
     stopwatch.stop();
 
 }
@@ -82,7 +82,12 @@ let Todolist = ['THE FIRST THING TO DO TODAY', 'THE SECOND THING TO DO TODAY','T
 function ShowTodoList(){
     let str = '';
     Todolist.map((item)=>
-      str+=`<li class='listItem'>${item}</li>`
+      str+=` <li class='listItem'>
+                 <div class="listCircle"></div>
+                 <span class='listfont'>${item}</span>
+                 <i class="far fa-play-circle"></i>
+            </li>`
+    
     );
    todo.innerHTML = `${str}`;
 }
@@ -94,11 +99,42 @@ function AddNewMission(e){
     Todolist.push(InputValue.value);
     console.log(InputValue.value);
     ShowTodoList();
+
+
+    for(let i = 0;i<Todolist.length;i++){
+    
+        let listbotton = document.querySelectorAll('.listCircle')[i];
+        let listToggleBotton = document.querySelectorAll('.listfont')[i];
+        
+        function CancelThing(){
+            listbotton.classList.toggle('listcrieleToggle');
+            listToggleBotton.classList.toggle('fontstrikeThrough')
+        }
+        
+        listbotton.addEventListener('click',CancelThing,false);
+        }
+    
+
 }
 
 
-// todo.addEventListener('click',ShowTodoList,false);
+
 createTodo.addEventListener('click',AddNewMission,false);
+
+//------todolist circle-------------------
+for(let i = 0;i<Todolist.length;i++){
+    
+let listbotton = document.querySelectorAll('.listCircle')[i];
+let listToggleBotton = document.querySelectorAll('.listfont')[i];
+
+function CancelThing(){
+    listbotton.classList.toggle('listcrieleToggle');
+    listToggleBotton.classList.toggle('fontstrikeThrough')
+}
+
+listbotton.addEventListener('click',CancelThing,false);
+}
+
 
 
 //----------------------------
